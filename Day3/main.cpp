@@ -2,11 +2,21 @@
 #include <fstream>
 #include <sstream>
 
+std::string convertToString(char* a, int size)
+{
+    int i;
+    std::string s = "";
+    for (i = 0; i < size; i++) {
+        s = s + a[i];
+    }
+    return s;
+}
+
 
 int main() {
     std::ifstream input;
     input.open("input.txt", std::ifstream::in);
-    int bits[1000][12];
+    char bits[1000][12];
 
     // read numbers from file and store them in 2D array bits
     if (input.is_open()) {
@@ -16,7 +26,7 @@ int main() {
             getline(input, line);
             std::stringstream ss(line);
             for (size_t j = 0; j < line.size(); j++) {
-                bits[i][j] = (int)line[j]-48;
+                bits[i][j] = line[j];
             }
             i++;
         }
@@ -24,45 +34,32 @@ int main() {
     else {
         std::cout << "Unable to open file";
     }
-
-    //output of bits array test
-//    for (int i = 0; i < 1000; i ++) {
-//        for (int j = 0; j < 12; j++) {
-//            std::cout << bits[i][j];
-//        }
-//        std::cout << std::endl;
-//    }
+    char gammaArray[12] = {};
+    char epsilonArray[12] = {};
 
     int count[12] = {};
 
     for (int i = 0; i < 1000; i++) {
         for (int j = 0; j < 12; j++) {
-            if (bits[i][j] == 1) {
+            if (bits[i][j] == '1') {
                 count[j]++;
 
             }
-            else if (bits[i][j] == 0){
+            else if (bits[i][j] == '0'){
                 count[j]--;
             }
-            //std::cout << bits[i][j];
         }
     }
-
-    int gammaArray[12] = {};
-    int epsilonArray[12] = {};
-
     for (int i = 0; i < 12; i++) {
         if (count[i] > 0) {
-            gammaArray[i] = 1;
-            epsilonArray[i] = 0;
+            gammaArray[i] = '1';
+            epsilonArray[i] = '0';
         }
         else if (count[i] < 0) {
-            gammaArray[i] = 0;
-            epsilonArray[i] = 1;
+            gammaArray[i] = '0';
+            epsilonArray[i] = '1';
         }
-
     }
-    //test gamma & epsilon array output
     for (const auto& e : gammaArray) {
         std::cout << e;
     }
@@ -72,10 +69,13 @@ int main() {
     }
     std::cout << std::endl;
 
-//    std::stringstream ss;
-//    for (int i : gammaArray) ss << i;
-//    ss >> gamma;
-
-
+    std::string gamma = convertToString(gammaArray, 12);
+    std::string epsilon = convertToString(epsilonArray, 12);
+    unsigned long long gammaDecimal = std::stoull(gamma, 0, 2);
+    unsigned long long epsilonDecimal = std::stoull(epsilon, 0, 2);
+    std::cout << "gamma decimal: " << gammaDecimal << std:: endl;
+    std::cout << "epsilon decimal: " << epsilonDecimal << std:: endl;
+    std::cout << "gamma * epsilon = " << gammaDecimal * epsilonDecimal << std:: endl;
     return 0;
 }
+
