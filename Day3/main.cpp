@@ -76,17 +76,19 @@ int main() {
     else {
         std::cout << "Unable to open file";
     }
-    char gammaArray[12] = {};
-    char epsilonArray[12] = {};
 
-    //int count[12] = {};
-
-    //std::cout << oxygenVector.size() << std::endl;
 
     for (int pos = 0; pos < 12; pos++) {
         filterVector(oxygenVector, pos, true);
         filterVector(co2Vector, pos, false);
     }
+    unsigned long long oxygenDecimal = std::stoull(oxygenVector[0], 0, 2);
+    unsigned long long co2Decimal = std::stoull(co2Vector[0], 0, 2);
+    std::cout << "oxygen * co2 = " << oxygenDecimal * co2Decimal << std:: endl;
+//    char gammaArray[12] = {};
+//    char epsilonArray[12] = {};
+//    int count[12] = {};
+//    std::cout << oxygenVector.size() << std::endl;
 //    for (int i = 0; i < 1000; i++) {
 //        for (int j = 0; j < 12; j++) {
 //            if (bits[i][j] == '1') {
@@ -117,8 +119,6 @@ int main() {
 //    std::cout << "epsilon decimal: " << epsilonDecimal << std:: endl;
 //    std::cout << "gamma * epsilon = " << gammaDecimal * epsilonDecimal << std:: endl;
 
-    unsigned long long oxygenDecimal = std::stoull(oxygenVector[0], 0, 2);
-    unsigned long long co2Decimal = std::stoull(co2Vector[0], 0, 2);
-    std::cout << "oxygen * co2 = " << oxygenDecimal * co2Decimal << std:: endl;
+
     return 0;
 }
